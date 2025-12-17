@@ -1,0 +1,53 @@
+name: Build and Push Docker Image to Nexus
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE: ubuntu_nginx
+  TAG: v1
+  REPO: 172.16.99.167:8082
+
+jobs:
+  build:
+    runs-on: self-hosted   # REQUIRED because Docker + private Nexus IP
+    # optional labels if you use them
+    # runs-on: [self-hosted, LinuxMintVM1]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build Docker image
+      run: |
+        docker build -f ubuntucontainer_nginx -t ${IMAGE}:${TAG} .
+
+    - name: Stop and remove existing container (if exists)
+      run: |
+        docker stop ubuntucontainer || true
+        docker rm ubuntucontainer || true
+
+    - name: Run Docker container
+      run: |
+        docker run -d --name ubuntucontainer -P -v nginxvolume1:/data ${IMAGE}:${TAG}
+
+    - name: Docker login to Nexus
+      env:
+        NEXUS_USER: ${{ secrets.NEXUS_USER }}
+        NEXUS_PASS: ${{ secrets.NEXUS_PASS }}
+      run: |
+        echo "$NEXUS_PASS" | docker login ${REPO} -u "$NEXUS_USER" --password-stdin
+
+    - name: Tag Docker image
+      run: |
+        docker tag ${IMAGE}:${TAG} ${REPO}/${IMAGE}:${TAG}
+
+    - name: Push image to Nexus
+      run: |
+        docker push ${REPO}/${IMAGE}:${TAG}
+
+    - name: Success message
+      run: echo "The pipeline job was successful"
+
