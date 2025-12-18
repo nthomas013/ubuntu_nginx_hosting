@@ -12,7 +12,7 @@ env:
 
 jobs:
   build:
-    runs-on: self-hosted   # REQUIRED because Docker + private Nexus IP
+    # REQUIRED because Docker + private Nexus IP
     # optional labels if you use them
     # runs-on: [self-hosted, LinuxMintVM1]
 
