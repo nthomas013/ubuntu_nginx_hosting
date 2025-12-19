@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 RUN apt update -y && apt install nginx -y
 COPY health_website_template /var/www/html
 EXPOSE 80
