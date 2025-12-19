@@ -30,7 +30,7 @@ jobs:
 
       - name: Docker login to Nexus
         run: |
-          echo "${{ secrets.NEXUS_PASS }}" | docker login ${{ env.REPO }} -u ${{ secrets.NEXUS_USER }} --password-stdin
+          echo "${{ secrets.NEXUS_PASS }}" | docker login http://${{ env.REPO }} -u ${{ secrets.NEXUS_USER }} --password-stdin
 
       - name: Tagging docker image
         run: |
