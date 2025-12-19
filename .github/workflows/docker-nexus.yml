@@ -8,7 +8,7 @@ on:
 env:
   IMAGE: "ubuntu_nginx"
   TAG: "v1"
-  REPO: "https://alina-neonatal-bardily.ngrok-free.dev"
+  REPO: "alina-neonatal-bardily.ngrok-free.dev"
 
 jobs:
   build-and-push:
