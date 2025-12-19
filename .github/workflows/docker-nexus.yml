@@ -18,7 +18,7 @@ jobs:
 
       - name: Set Image Variables
         run: |
-          echo "IMAGE_NAME=ubuntu_nginx1" >> $GITHUB_ENV
+          echo "IMAGE_NAME=ubuntu_nginx123" >> $GITHUB_ENV
           echo "IMAGE_TAG=v2" >> $GITHUB_ENV
           echo "REGISTRY=ghcr.io" >> $GITHUB_ENV
           echo "OWNER=${{ github.repository_owner }}" >> $GITHUB_ENV
