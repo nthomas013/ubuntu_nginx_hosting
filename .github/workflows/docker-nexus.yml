@@ -8,7 +8,7 @@ on:
 env:
   IMAGE: "ubuntu_nginx"
   TAG: "v1"
-  REPO: "alina-neonatal-bardily.ngrok-free.dev"
+  REPO: "https://alina-neonatal-bardily.ngrok-free.dev"
 
 jobs:
   build-and-push:
@@ -30,7 +30,7 @@ jobs:
 
       - name: Docker login to Nexus
         run: |
-          echo "${{ secrets.NEXUS_PASS }}" | docker login http://${{ env.REPO }} -u ${{ secrets.NEXUS_USER }} --password-stdin
+          echo "${{ secrets.NEXUS_PASS }}" | docker login https://alina-neonatal-bardily.ngrok-free.dev -u ${{ secrets.NEXUS_USER }} --password-stdin
 
       - name: Tagging docker image
         run: |
